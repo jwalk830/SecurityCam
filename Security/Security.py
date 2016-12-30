@@ -18,12 +18,12 @@ class Security:
 
     def start_recording():
         if self.is_armed:
-        self.is_recording = True
+            self.is_recording = True
             print("recording")
 
     def stop_recording():
         if self.is_recording:
-        self.is_recording = False
+            self.is_recording = False
             print("stop recording motion")
 
     def toggle_armed():
