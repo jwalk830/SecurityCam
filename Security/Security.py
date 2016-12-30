@@ -12,9 +12,9 @@ class Security:
         self.sleep_in_seconds = sleep_in_seconds
         
         #Event Handlers
-        self.pir.when_motion = start_recording
-        self.pir.when_no_motion = stop_recording
-        self.button.when_pressed = toggle_armed
+        self.pir.when_motion = self.start_recording
+        self.pir.when_no_motion = self.stop_recording
+        self.button.when_pressed = self.toggle_armed
 
     def start_recording():
         if self.is_armed:
