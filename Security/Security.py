@@ -53,7 +53,7 @@ class Security:
             sleep(2)
 
             # '2016-01-01=11:11:69'
-            timestamp = strftime("%Y-%m-%d=%H:%M:%S", gmtime())
+            timestamp = strftime("video/%Y-%m-%d-%H:%M:%S", gmtime())
 
             # Save in h264 format
             # https://en.wikipedia.org/wiki/H.264/MPEG-4_AVC
