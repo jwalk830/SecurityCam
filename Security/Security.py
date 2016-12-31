@@ -1,5 +1,6 @@
 import RPi.GPIO as GPIO
 import picamera
+from time import sleep
 from time import gmtime, strftime
 
 
@@ -7,13 +8,14 @@ class Security:
     def __init__(self, motion_pin=17, button_pin=18, sleep_in_seconds=5):
         # Variables
         GPIO.setmode(GPIO.BCM)
-        GPIO.setup(motion_pin, GPIO.IN)
-        GPIO.setup(button_pin, GPIO.IN)
+        GPIO.setup(motion_pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+        GPIO.setup(button_pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
         self.is_armed = False
         self.is_recording = False
         self.sleep_in_seconds = sleep_in_seconds
         self.motion_pin = motion_pin
         self.button_pin = button_pin
+        self.debounce = 0.15
 
         # Camera
         self.camera = picamera.PiCamera()
@@ -59,6 +61,7 @@ class Security:
         print("Toggle armed = {0}".format(self.is_armed))
         if self.is_armed:
             print("Pause program for {0} seconds".format(self.sleep_in_seconds))
+            sleep(self.sleep_in_seconds)
         else:
             print("Entered not function")
             self.stop_recording()
@@ -66,6 +69,9 @@ class Security:
     def secure_up(self):
         try:
             while True:
+
+                sleep(self.debounce)
+
                 gpio_motion = GPIO.input(self.motion_pin)
                 gpio_button = GPIO.input(self.button_pin)
 
