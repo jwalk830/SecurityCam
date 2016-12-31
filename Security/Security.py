@@ -102,9 +102,9 @@ class Security:
                     self.start_recording()
                     print("Button Low")
                 else:
+                    print("Stop recording")
                     self.stop_recording()
-                print("motion pin = {0}".format(gpio_motion))
-                print("button pin = {0}".format(gpio_button))
         except KeyboardInterrupt:  # If CTRL+C is pressed, exit cleanly:
             GPIO.cleanup()  # cleanup all GPIO
-            self.camera.stop_recording()
+            if self.is_recording:
+                self.camera.stop_recording()
