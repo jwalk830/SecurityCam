@@ -8,8 +8,8 @@ class Security:
     def __init__(self, motion_pin=17, button_pin=18, sleep_in_seconds=5):
         # Variables
         GPIO.setmode(GPIO.BCM)
-        GPIO.setup(motion_pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-        GPIO.setup(button_pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+        GPIO.setup(motion_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+        GPIO.setup(button_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
         self.is_armed = False
         self.is_recording = False
         self.sleep_in_seconds = sleep_in_seconds
@@ -39,6 +39,13 @@ class Security:
         self.camera.vflip = False
         self.camera.crop = (0.0, 0.0, 1.0, 1.0)
 
+        self.camera.start_preview()
+
+        # Camera warm-up time
+        sleep(2)
+
+        self. camera.capture('foo.jpg')
+
     def start_recording(self):
         if self.is_armed:
             # '2016-01-01=11:11:69'
@@ -50,7 +57,6 @@ class Security:
 
             self.is_recording = True
             print("recording")
-
 
     def stop_recording(self):
         if self.is_recording:
@@ -77,7 +83,7 @@ class Security:
                 gpio_motion = GPIO.input(self.motion_pin)
                 gpio_button = GPIO.input(self.button_pin)
 
-                if gpio_button:
+                if not gpio_button:
                     self.toggle_armed()
                     print("Button high")
                 if gpio_motion:
