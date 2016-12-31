@@ -15,8 +15,9 @@ class Security:
         self.button_pin = button_pin
 
     def start_recording():
-        self.is_recording = True
-        print("recording")
+        if self.is_armed:
+            self.is_recording = True
+            print("recording")
 
     def stop_recording():
         if self.is_recording:
@@ -35,7 +36,16 @@ class Security:
     def secure_up(self):
         try:
             while True:
-                print("motion pin = {0}".format(GPIO.input(self.motion_pin)))
-                print("button pin = {0}".format(GPIO.input(self.button_pin)))
+                gpio_motion = GPIO.input(self.motion_pin)
+                gpio_button = GPIO.input(self.button_pin)
+
+                if not gpio_button:
+                    self.toggle_armed()
+                if gpio_motion:
+                    self.start_recording()
+                else:
+                    self.stop_recording() 
+                print("motion pin = {0}".format(gpio_motion)
+                print("button pin = {0}".format(gpio_button)
         except KeyboardInterrupt: # If CTRL+C is pressed, exit cleanly:
             GPIO.cleanup() # cleanup all GPIO
