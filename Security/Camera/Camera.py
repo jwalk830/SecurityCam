@@ -2,7 +2,7 @@ import picamera
 from time import sleep
 
 
-class LCD:
+class Camera:
     def __init__(self):
         # Camera
         self.camera = picamera.PiCamera()
