@@ -32,11 +32,10 @@ class Security:
             print("Entered not function")
             self.stop_recording()
 
-    def secure_up():
+    def secure_up(self):
         try:
             while True:
-                print("motion pin = {0}".format(GPIO.input(self.motion_pin))
-                print("button pin = {0}".format(GPIO.input(self.button_pin))
+                print("motion pin = {0}".format(GPIO.input(self.motion_pin)))
+                print("button pin = {0}".format(GPIO.input(self.button_pin)))
         except KeyboardInterrupt: # If CTRL+C is pressed, exit cleanly:
-            pwm.stop() # stop PWM
             GPIO.cleanup() # cleanup all GPIO
