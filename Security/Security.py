@@ -70,6 +70,8 @@ class Security:
     def toggle_armed(self):
         self.is_armed = not self.is_armed
 
+        print("Alarm Armed = {0}".format(self.is_armed))
+
         if self.is_armed:
             sleep(self.sleep_in_seconds)
         else:
@@ -78,8 +80,6 @@ class Security:
     def secure_up(self):
         try:
             while True:
-
-                sleep(self.debounce)
 
                 gpio_motion = GPIO.input(self.motion_pin)
                 gpio_button = GPIO.input(self.button_pin)
