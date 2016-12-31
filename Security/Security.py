@@ -42,12 +42,16 @@ class Security:
         self.camera.start_preview()
 
         # Camera warm-up time
+        print("Camera warm-up time")
         sleep(2)
 
-        self. camera.capture('foo.jpg')
+        self.camera.capture('foo.jpg')
 
     def start_recording(self):
         if self.is_armed:
+            print("start_recording is_armed")
+            sleep(2)
+
             # '2016-01-01=11:11:69'
             timestamp = strftime("%Y-%m-%d=%H:%M:%S", gmtime())
 
@@ -57,21 +61,28 @@ class Security:
 
             self.is_recording = True
             print("recording")
+            sleep(2)
 
     def stop_recording(self):
         if self.is_recording:
+            print("stop_recording is_armed")
+            sleep(2)
             self.camera.stop_recording()
             self.is_recording = False
             print("stop recording motion")
+            sleep(2)
 
     def toggle_armed(self):
         self.is_armed = not self.is_armed
         print("Toggle armed = {0}".format(self.is_armed))
+        sleep(2)
         if self.is_armed:
             print("Pause program for {0} seconds".format(self.sleep_in_seconds))
-            sleep(self.sleep_in_seconds)
+            sleep(2)
+            # sleep(self.sleep_in_seconds)
         else:
             print("Entered not function")
+            sleep(2)
             self.stop_recording()
 
     def secure_up(self):
