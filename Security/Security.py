@@ -61,9 +61,7 @@ class Security:
     def secure_up(self):
         try:
             while True:
-
-                sleep(self.debounce)
-
+		sleep(self.debounce)
                 gpio_motion = GPIO.input(self.motion_pin)
                 gpio_button = GPIO.input(self.button_pin)
 
