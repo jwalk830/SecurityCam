@@ -12,7 +12,7 @@ class Security:
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(motion_pin, GPIO.IN)
         GPIO.setup(button_pin, GPIO.IN)
-        GPIO.setup(button_pin, GPIO.OUTPUT)
+        #GPIO.setup(button_pin, GPIO.OUT)
 
         self.is_armed = False
         self.is_recording = False
