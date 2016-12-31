@@ -77,7 +77,7 @@ class Security:
                 gpio_motion = GPIO.input(self.motion_pin)
                 gpio_button = GPIO.input(self.button_pin)
 
-                if not gpio_button:
+                if gpio_button:
                     self.toggle_armed()
                     print("Button high")
                 if gpio_motion:
