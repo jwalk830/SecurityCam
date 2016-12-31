@@ -20,7 +20,7 @@ class Security:
         self.camera = picamera.PiCamera()
         self.configure_camera()
 
-    def configure_camera():
+    def configure_camera(self):
         self.camera.sharpness = 0
         self.camera.contrast = 0
         self.camera.brightness = 50
@@ -38,7 +38,7 @@ class Security:
         self.camera.vflip = False
         self.camera.crop = (0.0, 0.0, 1.0, 1.0)
 
-    def start_recording():
+    def start_recording(self):
         if self.is_armed:
             # '2016-01-01=11:11:69'
             timestamp = strftime("%Y-%m-%d=%H:%M:%S", gmtime())
@@ -49,13 +49,13 @@ class Security:
             self.is_recording = True
             print("recording")
 
-    def stop_recording():
+    def stop_recording(self):
         if self.is_recording:
             camera.stop_recording()
             self.is_recording = False
             print("stop recording motion")
 
-    def toggle_armed():
+    def toggle_armed(self):
         self.is_armed = not self.is_armed
         print("Toggle armed = {0}".format(is_armed))
         if self.is_armed:
@@ -76,7 +76,7 @@ class Security:
                     self.start_recording()
                 else:
                     self.stop_recording()
-                print("motion pin = {0}".format(gpio_motion)
-                print("button pin = {0}".format(gpio_button)
+                print("motion pin = {0}".format(gpio_motion))
+                print("button pin = {0}".format(gpio_button))
         except KeyboardInterrupt:  # If CTRL+C is pressed, exit cleanly:
             GPIO.cleanup()  # cleanup all GPIO
