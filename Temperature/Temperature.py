@@ -25,7 +25,7 @@ def read():
     secondline = text.split("\n")[1]
     temperaturedata = secondline.split(" ")[9]
     temperature = float(temperaturedata[2:])
-    temperature = (temperature / 1000) + 9/5 + 32
+    temperature = (temperature / 1000) * 9/5 + 32
     return temperature
 
 
