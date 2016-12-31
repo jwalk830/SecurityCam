@@ -1,6 +1,7 @@
 from time import sleep
 import RPi.GPIO as GPIO
-
+import picamera
+from time import gmtime, strftime
 
 class Security:
     def __init__(self, motion_pin = 17, button_pin = 18, sleep_in_seconds = 5):
@@ -14,12 +15,40 @@ class Security:
         self.motion_pin = motion_pin
         self.button_pin = button_pin
 
-    def start_recording():
+	#Camera
+	self.camera = picamera.PiCamera()
+	configure_camera()   
+   def configure_camera():
+	camera.sharpness = 0
+	camera.contrast = 0
+	camera.brightness = 50
+	camera.saturation = 0
+	camera.ISO = 0
+	camera.video_stabilization = False
+	camera.exposure_compensation = 0
+	camera.exposure_mode = 'auto'
+	camera.meter_mode = 'average'
+	camera.awb_mode = 'auto'
+	camera.image_effect = 'none'
+	camera.color_effects = None
+	camera.rotation = 0
+	camera.hflip = False
+	camera.vflip = False
+	camera.crop = (0.0, 0.0, 1.0, 1.0) 
+
+   def start_recording():
+	# '2016-01-01 11:11:69'
+	timestamp = strftime("%Y-%m-%d=%H:%M:%S", gmtime())
+
+	# Save in h264 format 
+	# https://en.wikipedia.org/wiki/H.264/MPEG-4_AVC
+	camera.start_recording("{0}.h264".format(timestamp))
         self.is_recording = True
         print("recording")
 
     def stop_recording():
         if self.is_recording:
+	    camera.stop_recording()
             self.is_recording = False
             print("stop recording motion")
 
