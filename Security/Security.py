@@ -1,4 +1,3 @@
-from time import sleep
 import RPi.GPIO as GPIO
 import picamera
 from time import gmtime, strftime
@@ -45,19 +44,19 @@ class Security:
 
             # Save in h264 format
             # https://en.wikipedia.org/wiki/H.264/MPEG-4_AVC
-            camera.start_recording("{0}.h264".format(timestamp))
+            self.camera.start_recording("{0}.h264".format(timestamp))
             self.is_recording = True
             print("recording")
 
     def stop_recording(self):
         if self.is_recording:
-            camera.stop_recording()
+            self.camera.stop_recording()
             self.is_recording = False
             print("stop recording motion")
 
     def toggle_armed(self):
         self.is_armed = not self.is_armed
-        print("Toggle armed = {0}".format(is_armed))
+        print("Toggle armed = {0}".format(self.is_armed))
         if self.is_armed:
             print("Pause program for {0} seconds".format(self.sleep_in_seconds))
         else:
