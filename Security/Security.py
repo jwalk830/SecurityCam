@@ -2,8 +2,8 @@
 import RPi.GPIO as GPIO
 from time import sleep
 from time import gmtime, strftime
-from .LCD.LCD import LCD
-from .Camera.Camera import Camera
+from LCD.LCD import LCD
+from Camera.Camera import Camera
 
 
 class Security:
