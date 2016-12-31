@@ -1,12 +1,22 @@
-from gpiozero import MotionSensor, Button
 from time import sleep
+import RPi.GPIO as GPIO
 
 
 class Security:
+    def __init__(self, motion_pin = 17, button_pin = 18, sleep_in_seconds = 5):
+        #Variables
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setup(motion_pin, GPIO.IN)
+        GPIO.setup(button_pin, GPIO.IN)
+        self.is_armed = False
+        self.is_recording = False
+        self.sleep_in_seconds = sleep_in_seconds
+        self.motion_pin = motion_pin
+        self.button_pin = button_pin
+
     def start_recording():
-        if self.is_armed:
-            self.is_recording = True
-            print("recording")
+        self.is_recording = True
+        print("recording")
 
     def stop_recording():
         if self.is_recording:
@@ -22,15 +32,11 @@ class Security:
             print("Entered not function")
             self.stop_recording()
 
-    def __init__(self, motion_pin = 17, button_pin = 18, sleep_in_seconds = 5):
-        #Variables
-        self.pir = MotionSensor(motion_pin)
-        self.button = Button(button_pin)
-        self.is_armed = False
-        self.is_recording = False
-        self.sleep_in_seconds = sleep_in_seconds
-        
-        #Event Handlers
-        # pir.when_motion = self.start_recording
-        # pir.when_no_motion = self.stop_recording
-        # button.when_pressed = self.toggle_armed
+    def secure_up():
+        try:
+            while True:
+                print("motion pin = {0}".format(GPIO.input(self.motion_pin))
+                print("button pin = {0}".format(GPIO.input(self.button_pin))
+        except KeyboardInterrupt: # If CTRL+C is pressed, exit cleanly:
+            pwm.stop() # stop PWM
+            GPIO.cleanup() # cleanup all GPIO
