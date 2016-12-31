@@ -7,6 +7,7 @@ from Camera.Camera import Camera
 
 
 class Security:
+
     def __init__(self, motion_pin=17, button_pin=18, sleep_in_seconds=5):
         # Variables
         GPIO.setmode(GPIO.BCM)
@@ -61,7 +62,7 @@ class Security:
     def secure_up(self):
         try:
             while True:
-		sleep(self.debounce)
+                sleep(self.debounce)
                 gpio_motion = GPIO.input(self.motion_pin)
                 gpio_button = GPIO.input(self.button_pin)
 
