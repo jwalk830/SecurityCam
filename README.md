@@ -8,4 +8,4 @@ Home security motion monitoring system with video recording
 
 ```
 sudo apt-get install python-picamera
-``
+```
