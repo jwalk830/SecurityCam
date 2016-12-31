@@ -47,8 +47,10 @@ class Security:
             # Save in h264 format
             # https://en.wikipedia.org/wiki/H.264/MPEG-4_AVC
             self.camera.start_recording("{0}.h264".format(timestamp))
+
             self.is_recording = True
             print("recording")
+
 
     def stop_recording(self):
         if self.is_recording:
@@ -77,11 +79,14 @@ class Security:
 
                 if not gpio_button:
                     self.toggle_armed()
+                    print("Button high")
                 if gpio_motion:
                     self.start_recording()
+                    print("Button Low")
                 else:
                     self.stop_recording()
                 print("motion pin = {0}".format(gpio_motion))
                 print("button pin = {0}".format(gpio_button))
         except KeyboardInterrupt:  # If CTRL+C is pressed, exit cleanly:
             GPIO.cleanup()  # cleanup all GPIO
+            self.camera.stop_recording()
