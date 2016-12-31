@@ -1,7 +1,9 @@
+#!/usr/bin/env python
 import RPi.GPIO as GPIO
-import picamera
 from time import sleep
 from time import gmtime, strftime
+from .LCD import LCD
+from .Camera import Camera
 
 
 class Security:
@@ -10,6 +12,8 @@ class Security:
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(motion_pin, GPIO.IN)
         GPIO.setup(button_pin, GPIO.IN)
+        GPIO.setup(button_pin, GPIO.OUTPUT)
+
         self.is_armed = False
         self.is_recording = False
         self.sleep_in_seconds = sleep_in_seconds
@@ -17,34 +21,11 @@ class Security:
         self.button_pin = button_pin
         self.debounce = 0.15
 
-        # Camera
-        self.camera = picamera.PiCamera()
-        self.configure_camera()
+        # Initialize LCD
+        self.lcd = LCD()
 
-    def configure_camera(self):
-        # self.camera.resolution = (1024,768)
-        self.camera.sharpness = 0
-        self.camera.contrast = 0
-        self.camera.brightness = 50
-        self.camera.saturation = 0
-        self.camera.ISO = 0
-        self.camera.video_stabilization = False
-        self.camera.exposure_compensation = 0
-        self.camera.exposure_mode = 'auto'
-        self.camera.meter_mode = 'average'
-        self.camera.awb_mode = 'auto'
-        self.camera.image_effect = 'none'
-        self.camera.color_effects = None
-        self.camera.rotation = 0
-        self.camera.hflip = False
-        self.camera.vflip = False
-        self.camera.crop = (0.0, 0.0, 1.0, 1.0)
-
-        self.camera.start_preview()
-
-        # Camera warm-up time
-        print("Camera warm-up time")
-        sleep(2)
+        # Initialize Camera
+        self.camera = Camera()
 
     def start_recording(self):
         if self.is_armed:
@@ -81,6 +62,8 @@ class Security:
         try:
             while True:
 
+                sleep(self.debounce)
+
                 gpio_motion = GPIO.input(self.motion_pin)
                 gpio_button = GPIO.input(self.button_pin)
 
@@ -94,5 +77,6 @@ class Security:
 
         except KeyboardInterrupt:  # If CTRL+C is pressed, exit cleanly:
             GPIO.cleanup()  # cleanup all GPIO
+
             if self.is_recording:
                 self.camera.stop_recording()
