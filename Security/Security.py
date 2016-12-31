@@ -48,36 +48,31 @@ class Security:
 
     def start_recording(self):
         if self.is_armed:
-            print("start_recording is_armed")
 
             if not self.is_recording:
                 # '2016-01-01=11:11:69'
                 timestamp = strftime("video/%Y-%m-%d-%H:%M:%S", gmtime())
+
+                print("Starting Recording")
 
                 # Save in h264 format
                 # https://en.wikipedia.org/wiki/H.264/MPEG-4_AVC
                 self.camera.start_recording("{0}.h264".format(timestamp))
 
                 self.is_recording = True
-                print("recording")
 
     def stop_recording(self):
         if self.is_recording:
-            print("stop_recording is_armed")
-
+            print("Stop recording")
             self.camera.stop_recording()
             self.is_recording = False
-            print("stop recording motion")
 
     def toggle_armed(self):
         self.is_armed = not self.is_armed
-        print("Toggle armed = {0}".format(self.is_armed))
 
         if self.is_armed:
-            print("Pause program for {0} seconds".format(self.sleep_in_seconds))
             sleep(self.sleep_in_seconds)
         else:
-            print("Entered not function")
             self.stop_recording()
 
     def secure_up(self):
@@ -91,13 +86,10 @@ class Security:
 
                 if not gpio_button:
                     self.toggle_armed()
-                    print("Button high")
 
                 if gpio_motion:
                     self.start_recording()
-                    print("Button Low")
                 else:
-                    print("Stop recording")
                     self.stop_recording()
 
         except KeyboardInterrupt:  # If CTRL+C is pressed, exit cleanly:
