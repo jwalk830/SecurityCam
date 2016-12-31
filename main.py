@@ -1,5 +1,5 @@
-from .Security.Security import Security
-from .Temperature.Temperature import Temperature
+from Security import Security
+from Temperature import Temperature
 
 
 temp = Temperature('28-0316563a9dff', False)
