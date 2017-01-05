@@ -11,8 +11,8 @@ class Security:
     def __init__(self, motion_pin=17, button_pin=18, sleep_in_seconds=5):
         # Variables
         GPIO.setmode(GPIO.BCM)
-        GPIO.setup(motion_pin, GPIO.IN,pull_up_down=GPIO.PUD_UP)
-        GPIO.setup(button_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+        GPIO.setup(motion_pin, GPIO.IN)
+        GPIO.setup(button_pin, GPIO.IN)
 
         self.is_armed = False
         self.is_recording = False

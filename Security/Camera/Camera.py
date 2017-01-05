@@ -33,8 +33,8 @@ class Camera:
         print("Camera warm-up time")
         sleep(2)
 
-    def start_recording(self):
-        self.camera.start_recording()
+    def start_recording(self, video_name):
+        self.camera.start_recording(video_name)
 
     def stop_recording(self):
         self.camera.stop_recording()
