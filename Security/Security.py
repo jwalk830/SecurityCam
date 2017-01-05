@@ -4,6 +4,7 @@ from time import sleep
 from time import gmtime, strftime
 from LCD.LCD import LCD
 from Camera.Camera import Camera
+from Alert.Alert import Alert
 
 
 class Security:
@@ -27,6 +28,9 @@ class Security:
         # Initialize Camera
         self.camera = Camera()
 
+        # Initialize SMS Alert
+        self.alert = Alert("twilio account number", "twilio token", "to number", "from number")
+
     def start_recording(self):
         if self.is_armed:
 
@@ -39,6 +43,7 @@ class Security:
                 # Save in h264 format
                 # https://en.wikipedia.org/wiki/H.264/MPEG-4_AVC
                 file_name = "{0}.h264".format(timestamp)
+                self.alert.send_message("Recording started file name is {0}".format(file_name))
                 # Allow time for door to open
                 sleep(0.5)
                 self.camera.capture("{0}.jpg".format(file_name))
