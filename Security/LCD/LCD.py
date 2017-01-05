@@ -7,12 +7,8 @@ class LCD:
         LCD1602.write(0, 0, 'Security Cam')
         LCD1602.write(1, 1, 'Secure Up')
 
-
-    @staticmethod
     def clear(self):
         LCD1602.clear()
 
-    @staticmethod
     def write(self, line, message):
-        LCD1602.clear()
         LCD1602.write(line, line, message)
