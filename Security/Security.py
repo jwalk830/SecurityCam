@@ -34,24 +34,29 @@ class Security:
                 # '2016-01-01=11:11:69'
                 timestamp = strftime("video/%Y-%m-%d-%H:%M:%S", gmtime())
 
-                print("Starting Recording")
-
+                self.lcd.write(0, "Starting")
+                self.lcd.write(1, "Recording")
                 # Save in h264 format
                 # https://en.wikipedia.org/wiki/H.264/MPEG-4_AVC
-                self.camera.start_recording("{0}.h264".format(timestamp))
+                file_name = "{0}.h264".format(timestamp)
+                # Allow time for door to open
+                sleep(0.5)
+                self.camera.capture("{0}.jpg".format(file_name))
+                self.camera.start_recording(file_name)
 
                 self.is_recording = True
 
     def stop_recording(self):
         if self.is_recording:
-            print("Stop recording")
+            self.lcd.write(0, "Stopping")
+            self.lcd.write(1, "Recording")
             self.camera.stop_recording()
             self.is_recording = False
 
     def toggle_armed(self):
         self.is_armed = not self.is_armed
 
-        print("Alarm Armed = {0}".format(self.is_armed))
+        self.lcd.write(0, "Armed = {0}".format(self.is_armed))
 
         if self.is_armed:
             sleep(self.sleep_in_seconds)

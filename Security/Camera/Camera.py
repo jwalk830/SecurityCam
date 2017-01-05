@@ -38,3 +38,6 @@ class Camera:
 
     def stop_recording(self):
         self.camera.stop_recording()
+
+    def capture(self, image_name):
+        self.camera.capture(image_name)
