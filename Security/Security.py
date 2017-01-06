@@ -1,7 +1,5 @@
-#!/usr/bin/env python
 import RPi.GPIO as GPIO
-from time import sleep
-from time import gmtime, strftime
+from time import sleep, gmtime, strftime
 from LCD.LCD import LCD
 from Camera.Camera import Camera
 from Alert.Alert import Alert
